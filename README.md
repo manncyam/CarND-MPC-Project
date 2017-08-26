@@ -78,6 +78,7 @@ const size_t ave_v_start_factor{1};
 const size_t ave_a_start_factor{1};
 ```
 Finally, I choose these values:
+```
 // Tuning factor 
 const size_t cte_start_factor{3};
 const size_t epsi_start_factor{3};
