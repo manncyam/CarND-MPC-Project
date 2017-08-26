@@ -13,31 +13,31 @@ I will describe the precedure below in detail.
 
 ## 1. How to choose N & dt
 T = N * dt
-I wanted to have value of T equal to 1. Here are some values of N and dt with output result.
+I wanted to have value of T equal to 1. Here are some values of N and dt.
 
-| N | dt | Result|
-|---|----|-------|
-|25|0.04| see Figure 1.|
-|10|0.1| see Figure 2.|
-|8|0.125| see Figure 3.|
+| N | dt |
+|---|----|
+|25|0.04|
+|10|0.1|
+|8|0.125|
 
 Next I tried the value of T equal to 1.5
 
-| N | dt | Result|
-|---|----|-------|
-|25|0.06| see Figure 4.|
-|10|0.15| see Figure 5.|
-|8|0.1875| see Figure 6.|
+| N | dt |
+|---|----|
+|25|0.06|
+|10|0.15|
+|8|0.1875|
 
 Finally, I tried the value of T equal to 0.5.
 
-| N | dt | Result|
-|---|----|-------|
-|25|0.02| see Figure 7.|
-|10|0.05| see Figure 8.|
-|8|0.0625| see Figure 9.|
+| N | dt |
+|---|----|
+|25|0.02|
+|10|0.05|
+|8|0.0625|
 
-According to the result about I decided to use N = 8 and dt = 0.125
+I decided to use N = 8 and dt = 0.125 because it looks better than the other options.
 
 ## 2. How to fit Polynomial and preprocess MPC input
 I am using function polyfit to get fit polynomial third degree and get the coeffs as the result.
@@ -86,18 +86,18 @@ Finally, I choose these values:
 
 ```
 // Tuning factor 
-const size_t cte_start_factor{3};
-const size_t epsi_start_factor{3};
+const size_t cte_start_factor{100};
+const size_t epsi_start_factor{1};
 const size_t v_start_factor{10};
 const size_t delta_start_factor{1};
 const size_t  a_start_factor{1};
-const size_t  dv_start_factor{3};
+const size_t  dv_start_factor{10};
 const size_t ave_v_start_factor{1};
 const size_t ave_a_start_factor{1};
 ```
 
 ## 5. Recording video of the car driving for one lap
-
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)
 
 ## Dependencies
 

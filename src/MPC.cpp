@@ -38,12 +38,12 @@ size_t delta_start = epsi_start + N;
 size_t a_start = delta_start + N - 1;
 
 // Tuning factor 
-const size_t cte_start_factor{1};
+const size_t cte_start_factor{100};
 const size_t epsi_start_factor{1};
-const size_t v_start_factor{3};
+const size_t v_start_factor{10};
 const size_t delta_start_factor{1};
 const size_t  a_start_factor{1};
-const size_t  dv_start_factor{1};
+const size_t  dv_start_factor{10};
 const size_t ave_v_start_factor{1};
 const size_t ave_a_start_factor{1};
 
@@ -121,7 +121,12 @@ class FG_eval {
       // Only consider the actuation at time t.
       AD<double> delta0 = vars[delta_start + t - 1];
       AD<double> a0 = vars[a_start + t - 1];
-
+	  // Handle latency by using the prior to the previous delta and acc
+	  if(t > 1)
+	  {
+	    delta0 = vars[delta_start + t - 2];
+        a0 = vars[a_start + t - 2];	  
+	  }
       AD<double> f0 = coeffs[0] + coeffs[1] * x0 + coeffs[2] * CppAD::pow(x0, 2) + coeffs[3] * CppAD::pow(x0, 3);
       AD<double> psides0 = CppAD::atan(coeffs[1] + 2 * coeffs[2] * x0 + 3 * coeffs[3] * CppAD::pow(x0, 2));
 
