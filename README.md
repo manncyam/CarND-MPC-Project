@@ -4,6 +4,7 @@ Self-Driving Car Engineer Nanodegree Program
 ---
 
 ## The Goal of the project is for the car to drive in autonomous mode using Model Predict Control
+I will describe the precedure below in detail. 
 1. How to choose N & dt
 2. How to fit Polynomial and preprocess MPC input
 3. How to handle latency
@@ -21,8 +22,18 @@ I wanted to have value of T equal to 1. Here are some values of N and dt with ou
 |8|0.125| see Figure 3.|
 
 Next I tried the value of T equal to 1.5
+| N | dt | Result|
+|---|----|-------|
+|25|0.06| see Figure 4.|
+|10|0.15| see Figure 5.|
+|8|0.1875| see Figure 6.|
 
 Finally, I tried the value of T equal to 0.5.
+| N | dt | Result|
+|---|----|-------|
+|25|0.02| see Figure 7.|
+|10|0.05| see Figure 8.|
+|8|0.0625| see Figure 9.|
 
 According to the result about I decided to use N = 8 and dt = 0.125
 
@@ -41,7 +52,30 @@ To handle the latency I used the prior to the previous delta and acceleration as
 ```
 ## 4. How to fine tune MPC model
 I declared some constant variables so I can fine tune their values to get the desirable outcome.
+I started with the value below:
 ```
+// Tuning factor 
+const size_t cte_start_factor{1};
+const size_t epsi_start_factor{1};
+const size_t v_start_factor{1};
+const size_t delta_start_factor{1};
+const size_t  a_start_factor{1};
+const size_t  dv_start_factor{1};
+const size_t ave_v_start_factor{1};
+const size_t ave_a_start_factor{1};
+```
+Then
+// Tuning factor 
+const size_t cte_start_factor{3};
+const size_t epsi_start_factor{3};
+const size_t v_start_factor{10};
+const size_t delta_start_factor{1};
+const size_t  a_start_factor{1};
+const size_t  dv_start_factor{3};
+const size_t ave_v_start_factor{1};
+const size_t ave_a_start_factor{1};
+```
+Finally, I choose these values:
 // Tuning factor 
 const size_t cte_start_factor{3};
 const size_t epsi_start_factor{3};
@@ -53,6 +87,8 @@ const size_t ave_v_start_factor{1};
 const size_t ave_a_start_factor{1};
 ```
 ## 5. Recording video of the car driving for one lap
+
+
 ## Dependencies
 
 * cmake >= 3.5
