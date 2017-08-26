@@ -103,8 +103,7 @@ int main() {
           vector<double> waypoints_y;
 
           // transform waypoints to be from car's perspective
-          // this means we can consider px = 0, py = 0, and psi = 0
-          // greatly simplifying future calculations
+          // px = 0, py = 0, and psi = 0
           for (size_t i = 0; i < ptsx.size(); i++) {
             double dx = ptsx[i] - px;
             double dy = ptsy[i] - py;
@@ -160,7 +159,7 @@ int main() {
 
           //.. add (x,y) points to list here, points are in reference to the vehicle's coordinate system
           // the points in the simulator are connected by a Yellow line
-		  for (double i = 0; i < 100; i += 3){
+		  for (double i = 5; i < 100; i += 5){
             next_x_vals.push_back(i);
             next_y_vals.push_back(polyeval(coeffs, i));
           }
