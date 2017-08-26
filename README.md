@@ -97,7 +97,7 @@ const size_t ave_a_start_factor{1};
 ```
 
 ## 5. Recording video of the car driving for one lap
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/oA8zWwsEBEA&feature=youtu.be/0.jpg)](https://www.youtube.com/watch?v=oA8zWwsEBEA&feature=youtu.be)
 
 ## Dependencies
 
