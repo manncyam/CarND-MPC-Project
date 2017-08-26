@@ -55,6 +55,7 @@ To handle the latency I used the prior to the previous delta and acceleration as
 ## 4. How to fine tune MPC model
 I declared some constant variables so I can fine tune their values to get the desirable outcome.
 I started with the value below:
+
 ```
 // Tuning factor 
 const size_t cte_start_factor{1};
@@ -66,7 +67,10 @@ const size_t  dv_start_factor{1};
 const size_t ave_v_start_factor{1};
 const size_t ave_a_start_factor{1};
 ```
+
 Then
+
+```
 // Tuning factor 
 const size_t cte_start_factor{3};
 const size_t epsi_start_factor{3};
@@ -77,7 +81,9 @@ const size_t  dv_start_factor{3};
 const size_t ave_v_start_factor{1};
 const size_t ave_a_start_factor{1};
 ```
+
 Finally, I choose these values:
+
 ```
 // Tuning factor 
 const size_t cte_start_factor{3};
@@ -89,6 +95,7 @@ const size_t  dv_start_factor{3};
 const size_t ave_v_start_factor{1};
 const size_t ave_a_start_factor{1};
 ```
+
 ## 5. Recording video of the car driving for one lap
 
 
