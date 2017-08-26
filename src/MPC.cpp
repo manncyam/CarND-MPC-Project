@@ -37,6 +37,17 @@ size_t epsi_start = cte_start + N;
 size_t delta_start = epsi_start + N;
 size_t a_start = delta_start + N - 1;
 
+// Tuning factor 
+const size_t cte_start_factor{1};
+const size_t epsi_start_factor{1};
+const size_t v_start_factor{3};
+const size_t delta_start_factor{1};
+const size_t  a_start_factor{1};
+const size_t  dv_start_factor{1};
+const size_t ave_v_start_factor{1};
+const size_t ave_a_start_factor{1};
+
+
 class FG_eval {
  public:
   // Fitted polynomial coefficients
@@ -54,22 +65,22 @@ class FG_eval {
 
 	// sum cost cte, epsi and v penalty
     for (size_t t = 0; t < N; t++) {
-      fg[0] += 3000 * CppAD::pow(vars[cte_start + t], 2);
-      fg[0] += 3000 * CppAD::pow(vars[epsi_start + t], 2);
-      fg[0] += 10 * CppAD::pow(vars[v_start + t] - ref_v, 2);
+      fg[0] += cte_start_factor * CppAD::pow(vars[cte_start + t], 2);
+      fg[0] += epsi_start_factor * CppAD::pow(vars[epsi_start + t], 2);
+      fg[0] += v_start_factor * CppAD::pow(vars[v_start + t] - ref_v, 2);
     }
 	
 	// Minimize the use of actuators.
     for (size_t t = 0; t < N - 1; t++) {
-      fg[0] += 5 * CppAD::pow(vars[delta_start + t], 2);
-      fg[0] += 5 * CppAD::pow(vars[a_start + t], 2);
-	  fg[0] += 700 * CppAD::pow(vars[delta_start + t] * vars[v_start + t], 2);
+      fg[0] += delta_start_factor * CppAD::pow(vars[delta_start + t], 2);
+      fg[0] += a_start_factor * CppAD::pow(vars[a_start + t], 2);
+	  fg[0] += dv_start_factor * CppAD::pow(vars[delta_start + t] * vars[v_start + t], 2);
     }
 	
 	// Minimize the value gap between sequential actuations.
     for (size_t t = 0; t < N - 2; t++) {
-      fg[0] += 200 * CppAD::pow((vars[delta_start + t + 1] + vars[delta_start + t])/2, 2);
-      fg[0] += 10 * CppAD::pow((vars[a_start + t + 1] + vars[a_start + t])/2, 2);
+      fg[0] += ave_v_start_factor * CppAD::pow((vars[delta_start + t + 1] + vars[delta_start + t])/2, 2);
+      fg[0] += ave_a_start_factor * CppAD::pow((vars[a_start + t + 1] + vars[a_start + t])/2, 2);
     }
 	
 	//
@@ -110,6 +121,7 @@ class FG_eval {
       // Only consider the actuation at time t.
       AD<double> delta0 = vars[delta_start + t - 1];
       AD<double> a0 = vars[a_start + t - 1];
+
       AD<double> f0 = coeffs[0] + coeffs[1] * x0 + coeffs[2] * CppAD::pow(x0, 2) + coeffs[3] * CppAD::pow(x0, 3);
       AD<double> psides0 = CppAD::atan(coeffs[1] + 2 * coeffs[2] * x0 + 3 * coeffs[3] * CppAD::pow(x0, 2));
 
