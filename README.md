@@ -3,6 +3,102 @@ Self-Driving Car Engineer Nanodegree Program
 
 ---
 
+## The Goal of the project is for the car to drive in autonomous mode using Model Predict Control
+I will describe the precedure below in detail. 
+1. How to choose N & dt
+2. How to fit Polynomial and preprocess MPC input
+3. How to handle latency
+4. How to fine tune MPC model
+5. Recording video of the car driving for one lap
+
+## 1. How to choose N & dt
+T = N * dt
+I wanted to have value of T equal to 1. Here are some values of N and dt.
+
+| N | dt |
+|---|----|
+|25|0.04|
+|10|0.1|
+|8|0.125|
+
+Next I tried the value of T equal to 1.5
+
+| N | dt |
+|---|----|
+|25|0.06|
+|10|0.15|
+|8|0.1875|
+
+Finally, I tried the value of T equal to 0.5.
+
+| N | dt |
+|---|----|
+|25|0.02|
+|10|0.05|
+|8|0.0625|
+
+I decided to use N = 8 and dt = 0.125 because it looks better than the other options.
+
+## 2. How to fit Polynomial and preprocess MPC input
+I am using function polyfit to get fit polynomial third degree and get the coeffs as the result.
+Before fitting points x and pointx y, I choose the current point as the origin. It means px=0 and py=0 and convert the rest of the point with respect the car position.
+## 3. How to handle latency
+To handle the latency I used the prior to the previous delta and acceleration as shown in the code below
+```
+    // Handle latency by using the prior to the previous delta and acc
+	  if(t > 1)
+	  {
+	    delta0 = vars[delta_start + t - 2];
+        a0 = vars[a_start + t - 2];	  
+	  }
+```
+## 4. How to fine tune MPC model
+I declared some constant variables so I can fine tune their values to get the desirable outcome.
+I started with the value below:
+
+```
+// Tuning factor 
+const size_t cte_start_factor{1};
+const size_t epsi_start_factor{1};
+const size_t v_start_factor{1};
+const size_t delta_start_factor{1};
+const size_t  a_start_factor{1};
+const size_t  dv_start_factor{1};
+const size_t ave_v_start_factor{1};
+const size_t ave_a_start_factor{1};
+```
+
+Then
+
+```
+// Tuning factor 
+const size_t cte_start_factor{3};
+const size_t epsi_start_factor{3};
+const size_t v_start_factor{10};
+const size_t delta_start_factor{1};
+const size_t  a_start_factor{1};
+const size_t  dv_start_factor{3};
+const size_t ave_v_start_factor{1};
+const size_t ave_a_start_factor{1};
+```
+
+Finally, I choose these values:
+
+```
+// Tuning factor 
+const size_t cte_start_factor{100};
+const size_t epsi_start_factor{1};
+const size_t v_start_factor{10};
+const size_t delta_start_factor{1};
+const size_t  a_start_factor{1};
+const size_t  dv_start_factor{10};
+const size_t ave_v_start_factor{1};
+const size_t ave_a_start_factor{1};
+```
+
+## 5. Recording video of the car driving for one lap
+[![MPC Video](https://img.youtube.com/vi/oA8zWwsEBEA&feature=youtu.be/0.jpg)](https://www.youtube.com/watch?v=oA8zWwsEBEA&feature=youtu.be)
+
 ## Dependencies
 
 * cmake >= 3.5
