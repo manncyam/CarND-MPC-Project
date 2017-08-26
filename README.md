@@ -22,6 +22,7 @@ I wanted to have value of T equal to 1. Here are some values of N and dt with ou
 |8|0.125| see Figure 3.|
 
 Next I tried the value of T equal to 1.5
+
 | N | dt | Result|
 |---|----|-------|
 |25|0.06| see Figure 4.|
@@ -29,6 +30,7 @@ Next I tried the value of T equal to 1.5
 |8|0.1875| see Figure 6.|
 
 Finally, I tried the value of T equal to 0.5.
+
 | N | dt | Result|
 |---|----|-------|
 |25|0.02| see Figure 7.|
