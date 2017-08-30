@@ -8,36 +8,13 @@ I will describe the precedure below in detail.
 1. How to choose N & dt
 2. How to fit Polynomial and preprocess MPC input
 3. How to handle latency
-4. How to fine tune MPC model
-5. Recording video of the car driving for one lap
+4. How to update states
+5. How to fine tune MPC model
+6. Recording video of the car driving for one lap
 
 ## 1. How to choose N & dt
 T = N * dt
-I wanted to have value of T equal to 1. Here are some values of N and dt.
-
-| N | dt |
-|---|----|
-|25|0.04|
-|10|0.1|
-|8|0.125|
-
-Next I tried the value of T equal to 1.5
-
-| N | dt |
-|---|----|
-|25|0.06|
-|10|0.15|
-|8|0.1875|
-
-Finally, I tried the value of T equal to 0.5.
-
-| N | dt |
-|---|----|
-|25|0.02|
-|10|0.05|
-|8|0.0625|
-
-I decided to use N = 8 and dt = 0.125 because it looks better than the other options.
+I wanted to have value of T equal to 1, and I choose 10 for N. Therefore, I set dt to 0.1. I want dt as small as possible so the car get updated as fast as possible.
 
 ## 2. How to fit Polynomial and preprocess MPC input
 I am using function polyfit to get fit polynomial third degree and get the coeffs as the result.
@@ -52,7 +29,20 @@ To handle the latency I used the prior to the previous delta and acceleration as
         a0 = vars[a_start + t - 2];	  
 	  }
 ```
-## 4. How to fine tune MPC model
+## 4. How to update states
+Here is the equation used to update the model state. 
+
+![Update states equation](images/update_eq.jpg)
+
+For psi and epsi is a bit tricky, since delta = positive, we rotate counter-clockwise. However, in the simulator, positive mean to turn right. 
+Therefore, instead of change the equation below, I multiplied -1 with the steering value 
+```
+msgJson["steering_angle"] = -1 * steer_value / (deg2rad(25));
+```
+![Update psi and epsi equation](images/yaw.jpg)
+
+
+## 5. How to fine tune MPC model
 I declared some constant variables so I can fine tune their values to get the desirable outcome.
 I started with the value below:
 
@@ -81,23 +71,26 @@ const size_t  dv_start_factor{3};
 const size_t ave_v_start_factor{1};
 const size_t ave_a_start_factor{1};
 ```
+.
+.
+.
 
 Finally, I choose these values:
 
 ```
 // Tuning factor 
-const size_t cte_start_factor{100};
-const size_t epsi_start_factor{1};
-const size_t v_start_factor{10};
-const size_t delta_start_factor{1};
-const size_t  a_start_factor{1};
-const size_t  dv_start_factor{10};
-const size_t ave_v_start_factor{1};
-const size_t ave_a_start_factor{1};
+const size_t cte_start_factor{500};
+const size_t epsi_start_factor{50};
+const size_t v_start_factor{15};
+const size_t delta_start_factor{5};
+const size_t  a_start_factor{5};
+const size_t  dv_start_factor{20};
+const size_t ave_v_start_factor{10};
+const size_t ave_a_start_factor{10};
 ```
 
-## 5. Recording video of the car driving for one lap
-[![MPC Video](https://img.youtube.com/vi/oA8zWwsEBEA&feature=youtu.be/0.jpg)](https://www.youtube.com/watch?v=oA8zWwsEBEA&feature=youtu.be)
+## 6. Recording video of the car driving for one lap
+[![Thambnail](images/thumb_.jpg)](https://youtu.be/oC3JDDLblJs)
 
 ## Dependencies
 
