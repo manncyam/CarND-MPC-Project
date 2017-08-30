@@ -90,7 +90,7 @@ const size_t ave_a_start_factor{10};
 ```
 
 ## 6. Recording video of the car driving for one lap
-[![MPC Video](https://img.youtube.com/vi/oC3JDDLblJs&feature=youtu.be/0.jpg)](https://www.youtube.com/watch?v=oC3JDDLblJs&feature=youtu.be)
+[![Thambnail](images/thumb_.jpg)](https://youtu.be/oC3JDDLblJs)
 
 ## Dependencies
 
